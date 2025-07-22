@@ -6,3 +6,9 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8888:8080"
