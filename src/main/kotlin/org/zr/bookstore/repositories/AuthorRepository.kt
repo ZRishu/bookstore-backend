@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 import org.zr.bookstore.domain.entities.Author
 
 @Repository
-interface AuthorRepository : JpaRepository<Author, Long?> {
+interface AuthorRepository : JpaRepository<Author, Long> {
 }
