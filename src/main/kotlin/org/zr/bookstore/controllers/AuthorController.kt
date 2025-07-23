@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -46,5 +47,19 @@ class AuthorController(
         return authorService.getSingleAuthor(id)?.toAuthorDto()
             ?.let { ResponseEntity(it, HttpStatus.OK) }
             ?: ResponseEntity.notFound().build()
+    }
+
+    @PutMapping(path = ["/{id}"])
+    fun fullUpdateAuthor(
+        @PathVariable id: Long,
+        @RequestBody authorDto: AuthorDto
+    ): ResponseEntity<AuthorDto> {
+        return try {
+            val updatedAuthor = authorService.fullUpdateAuthor(id, authorDto.toAuthor()).toAuthorDto()
+            ResponseEntity(updatedAuthor, HttpStatus.OK)
+
+        } catch (e: IllegalStateException) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
     }
 }
