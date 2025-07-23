@@ -9,4 +9,5 @@ interface AuthorService {
     fun getSingleAuthor(id: Long): Author?
     fun fullUpdateAuthor(id: Long, author: Author): Author
     fun partialUpdateAuthor(id: Long, author: AuthorUpdateRequest): Author
+    fun deleteAuthor(id: Long)
 }

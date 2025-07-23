@@ -48,4 +48,8 @@ class AuthorServiceImpl(
         )
         return authorRepository.save(updatedAuthor)
     }
+
+    override fun deleteAuthor(id: Long) {
+        authorRepository.deleteById(id)
+    }
 }
