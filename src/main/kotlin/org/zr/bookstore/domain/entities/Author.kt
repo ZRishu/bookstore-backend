@@ -1,4 +1,4 @@
-package org.zr.bookstore.domain
+package org.zr.bookstore.domain.entities
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
