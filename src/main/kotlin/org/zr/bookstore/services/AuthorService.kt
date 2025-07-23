@@ -1,5 +1,6 @@
 package org.zr.bookstore.services
 
+import org.zr.bookstore.domain.AuthorUpdateRequest
 import org.zr.bookstore.domain.entities.Author
 
 interface AuthorService {
@@ -7,4 +8,5 @@ interface AuthorService {
     fun listAuthors(): List<Author>
     fun getSingleAuthor(id: Long): Author?
     fun fullUpdateAuthor(id: Long, author: Author): Author
+    fun partialUpdateAuthor(id: Long, author: AuthorUpdateRequest): Author
 }
