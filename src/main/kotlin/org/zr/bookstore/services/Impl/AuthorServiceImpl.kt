@@ -13,4 +13,8 @@ class AuthorServiceImpl(
     override fun createAuthor(author: Author): Author {
         return authorRepository.save(author)
     }
+
+    override fun listAuthors(): List<Author> {
+        return authorRepository.findAll()
+    }
 }
