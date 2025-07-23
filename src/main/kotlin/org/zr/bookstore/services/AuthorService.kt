@@ -1,0 +1,7 @@
+package org.zr.bookstore.services
+
+import org.zr.bookstore.domain.entities.Author
+
+interface AuthorService {
+    fun createAuthor(author: Author): Author
+}
