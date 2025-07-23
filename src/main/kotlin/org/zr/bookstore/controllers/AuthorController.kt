@@ -23,10 +23,15 @@ class AuthorController(
     fun createAuthor(
         @RequestBody authorDto: AuthorDto
     ): ResponseEntity<AuthorDto> {
-        val createdAuthor = authorService.createAuthor(
-            authorDto.toAuthor()
-        ).toAuthorDto()
-        return ResponseEntity(createdAuthor, HttpStatus.CREATED)
+        return try {
+            val createdAuthor = authorService.createAuthor(
+                authorDto.toAuthor()
+            ).toAuthorDto()
+            ResponseEntity(createdAuthor, HttpStatus.CREATED)
+
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
     }
 
     @GetMapping
