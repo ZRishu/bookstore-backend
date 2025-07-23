@@ -3,6 +3,7 @@ package org.zr.bookstore.controllers
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.zr.bookstore.domain.dtos.AuthorDto
+import org.zr.bookstore.domain.dtos.AuthorUpdateRequestDto
 import org.zr.bookstore.services.AuthorService
 import org.zr.bookstore.toAuthor
 import org.zr.bookstore.toAuthorDto
+import org.zr.bookstore.toAuthorUpdateRequest
 
 @RestController
 @RequestMapping(path = ["/v1/authors"])
@@ -56,6 +59,20 @@ class AuthorController(
     ): ResponseEntity<AuthorDto> {
         return try {
             val updatedAuthor = authorService.fullUpdateAuthor(id, authorDto.toAuthor()).toAuthorDto()
+            ResponseEntity(updatedAuthor, HttpStatus.OK)
+
+        } catch (e: IllegalStateException) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @PatchMapping(path = ["/{id}"])
+    fun partialUpdateAuthor(
+        @PathVariable id: Long,
+        @RequestBody authorDto: AuthorUpdateRequestDto
+    ): ResponseEntity<AuthorDto> {
+        return try {
+            val updatedAuthor = authorService.partialUpdateAuthor(id, authorDto.toAuthorUpdateRequest()).toAuthorDto()
             ResponseEntity(updatedAuthor, HttpStatus.OK)
 
         } catch (e: IllegalStateException) {
