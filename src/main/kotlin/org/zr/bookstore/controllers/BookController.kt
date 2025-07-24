@@ -64,4 +64,10 @@ class BookController(
             ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
+
+    @DeleteMapping(path = ["/{isbn}"])
+    fun deleteBook(@PathVariable("isbn") isbn: String): ResponseEntity<Unit> {
+        bookService.deleteBook(isbn)
+        return ResponseEntity.noContent().build()
+    }
 }
