@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.zr.bookstore.domain.dtos.BookSummaryDto
+import org.zr.bookstore.domain.dtos.BookUpdateRequestDto
 import org.zr.bookstore.exceptions.InvalidAuthorException
 import org.zr.bookstore.services.BookService
 import org.zr.bookstore.toBookSummary
@@ -38,4 +39,15 @@ class BookController(
     ): List<BookSummaryDto> {
         return bookService.listBooks(authorId).map { it.toBookSummaryDto() }
     }
+
+    @GetMapping(path = ["/{isbn}"])
+    fun readOneBook(
+        @PathVariable("isbn") isbn: String
+    ): ResponseEntity<BookSummaryDto> {
+        return bookService.getBook(isbn)
+            ?. let { ResponseEntity(it.toBookSummaryDto(), HttpStatus.OK) }
+            ?: ResponseEntity(HttpStatus.NOT_FOUND)
+    }
+
+
 }
