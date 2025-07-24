@@ -5,4 +5,5 @@ import org.zr.bookstore.domain.entities.Book
 
 interface BookService {
     fun createUpdate(isbn: String, bookSummary: BookSummary): Pair<Book, Boolean>
+    fun listBooks(): List<Book>
 }
