@@ -36,4 +36,8 @@ class BookServiceImpl(
             bookRepository.findAllByAuthorId(it)
         } ?: bookRepository.findAll()
     }
+
+    override fun getBook(isbn: String): Book? {
+        return bookRepository.findByIdOrNull(isbn)
+    }
 }
