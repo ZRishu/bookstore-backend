@@ -1,11 +1,6 @@
 package org.zr.bookstore.domain.entities
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "authors")
@@ -25,5 +20,8 @@ data class Author(
     val description: String,
 
     @Column(name = "image")
-    val image: String
+    val image: String,
+
+    @OneToMany(mappedBy = "author", cascade = [(CascadeType.REMOVE)])
+    val books: List<Book>
 )
