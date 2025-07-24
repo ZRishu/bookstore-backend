@@ -4,6 +4,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.zr.bookstore.domain.BookSummary
+import org.zr.bookstore.domain.BookUpdateRequest
 import org.zr.bookstore.domain.entities.Book
 import org.zr.bookstore.repositories.AuthorRepository
 import org.zr.bookstore.repositories.BookRepository
@@ -39,5 +40,22 @@ class BookServiceImpl(
 
     override fun getBook(isbn: String): Book? {
         return bookRepository.findByIdOrNull(isbn)
+    }
+
+    override fun partialUpdateBook(
+        isbn: String,
+        book: BookUpdateRequest
+    ): Book {
+
+        val existingBook = bookRepository.findByIdOrNull(isbn)
+        checkNotNull(existingBook)
+
+        val updatedBook = existingBook.copy(
+            title = book.title ?: existingBook.title,
+            description = book.description ?: existingBook.description,
+            image = book.image ?: existingBook.image,
+        )
+
+        return bookRepository.save(updatedBook)
     }
 }
