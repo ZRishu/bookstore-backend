@@ -6,4 +6,5 @@ import org.zr.bookstore.domain.entities.Book
 
 @Repository
 interface BookRepository : JpaRepository<Book, String> {
+    fun findAllByAuthorId(authorId: Long): List<Book>
 }
