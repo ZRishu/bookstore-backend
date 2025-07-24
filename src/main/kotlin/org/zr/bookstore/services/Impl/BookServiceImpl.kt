@@ -42,6 +42,7 @@ class BookServiceImpl(
         return bookRepository.findByIdOrNull(isbn)
     }
 
+    @Transactional
     override fun partialUpdateBook(
         isbn: String,
         book: BookUpdateRequest
