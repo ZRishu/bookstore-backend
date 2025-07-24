@@ -31,4 +31,9 @@ class BookController(
             ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
+
+    @GetMapping
+    fun readManyBooks(): List<BookSummaryDto> {
+        return bookService.listBooks().map { it.toBookSummaryDto() }
+    }
 }
