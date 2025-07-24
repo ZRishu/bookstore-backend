@@ -23,5 +23,5 @@ data class Author(
     val image: String,
 
     @OneToMany(mappedBy = "author", cascade = [(CascadeType.REMOVE)])
-    val books: List<Book>
+    val books: List<Book> = emptyList()
 )
