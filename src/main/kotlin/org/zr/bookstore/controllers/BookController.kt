@@ -9,6 +9,7 @@ import org.zr.bookstore.exceptions.InvalidAuthorException
 import org.zr.bookstore.services.BookService
 import org.zr.bookstore.toBookSummary
 import org.zr.bookstore.toBookSummaryDto
+import org.zr.bookstore.toBookUpdateRequest
 
 @RestController
 @RequestMapping("/v1/books")
@@ -49,5 +50,18 @@ class BookController(
             ?: ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
+    @PatchMapping(path = ["/{isbn}"])
+    fun partialUpdateBook(
+        @PathVariable("isbn") isbn: String,
+        @RequestBody bookDto: BookUpdateRequestDto
+    ): ResponseEntity<BookSummaryDto> {
 
+        return try {
+            val updatedBook = bookService.partialUpdateBook(isbn, bookDto.toBookUpdateRequest())
+            ResponseEntity.ok(updatedBook.toBookSummaryDto())
+
+        } catch (e: IllegalStateException) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
 }
